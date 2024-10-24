@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Redirect all requests to /php
+RewriteCond %{REQUEST_URI} !^/php
+RewriteRule ^(.*)$ /php/$1 [L]

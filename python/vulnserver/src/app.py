@@ -33,7 +33,7 @@ def xml():
     
     if request.method == 'POST':
         xml_data = request.form['xml']
-        parser = etree.XMLParser(resolve_entities=True, no_network=False)
+        parser = etree.XMLParser(resolve_entities=True, no_network=False, load_dtd=True)
         try:
             doc = etree.fromstring(xml_data.encode('utf-8'), parser)
             parsed_xml = etree.tostring(doc).decode('utf-8')
